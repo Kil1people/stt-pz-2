@@ -1,21 +1,44 @@
 /**
+ * Removes floating point noise (0.1 + 0.2 = 0.30000000000000004 -> 0.3)
+ * @param value {number}
+ * @returns {number}
+ */
+function fix(value) {
+  return Number.isFinite(value) ? Number(value.toPrecision(12)) : value;
+}
+
+/**
+ * This function must add two numbers and return sum of numbers
+ * @param a {number|string}
+ * @param b {number|string}
+ * @returns {number}
+ */
+function sum(a, b) {
+  return fix(Number(a) + Number(b));
+}
+
+/**
  * This function must subtraction two numbers and return result of subtraction
  * @param a {number|string}
  * @param b {number|string}
  * @returns {number}
  */
 function subtraction(a, b) {
-  // Write your code here
+  return fix(Number(a) - Number(b));
 }
 
 /**
  * This function must division two numbers and return result according to all arithmetic rules
+ * Division by zero is not allowed and throws an error.
  * @param a {number|string}
  * @param b {number|string}
  * @returns {number}
  */
 function division(a, b) {
-  // Write your code here
+  if (Number(b) === 0) {
+    throw new Error('Division by zero');
+  }
+  return fix(Number(a) / Number(b));
 }
 
 /**
@@ -25,7 +48,7 @@ function division(a, b) {
  * @returns {number}
  */
 function multiplication(a, b) {
-  // Write your code here
+  return fix(Number(a) * Number(b));
 }
 
 /**
@@ -35,7 +58,7 @@ function multiplication(a, b) {
  * @returns {number}
  */
 function percentage(value, percent) {
-  // Write your code here
+  return fix(Number(value) * Number(percent) / 100);
 }
 
 /**
@@ -44,7 +67,7 @@ function percentage(value, percent) {
  * @returns {number}
  */
 function getWholeNumberPart(number) {
-  // Write your code here
+  return Math.trunc(Number(number));
 }
 
 /**
@@ -53,7 +76,7 @@ function getWholeNumberPart(number) {
  * @returns {number[]}
  */
 function getEvenNumbers(numbers) {
-  // Write your code here
+  return numbers.filter(n => n % 2 === 0);
 }
 
 /**
@@ -62,7 +85,7 @@ function getEvenNumbers(numbers) {
  * @returns {number}
  */
 function getMaxNumber(numbers) {
-  // Write your code here
+  return Math.max(...numbers);
 }
 
 /**
@@ -71,7 +94,10 @@ function getMaxNumber(numbers) {
  * @returns {{min: number, max: number}}
  */
 function getMinAndMaxNumbers(numbers) {
-  // Write your code here
+  return {
+    min: Math.min(...numbers),
+    max: Math.max(...numbers)
+  };
 }
 
 /**
@@ -80,16 +106,19 @@ function getMinAndMaxNumbers(numbers) {
  * @returns {number}
  */
 function arithmeticMeans(numbers) {
-  // Write your code here
+  if (numbers.length === 0) {
+    return NaN;
+  }
+  return fix(numbers.reduce((acc, n) => acc + n, 0) / numbers.length);
 }
 
 /**
- * This function return array of vowerls form string
+ * This function return array of vowerls form string (latin and ukrainian vowels)
  * @param str {string}
  * @returns {string[]}
  */
 function getVowels(str) {
-  // Write your code here
+  return str.match(/[aeiouаеєиіїоуюя]/gi) || [];
 }
 
 /**
@@ -97,8 +126,8 @@ function getVowels(str) {
  * @param str {string[]}
  * @returns {string}
  */
-function cancatString() {
-  // Write your code here
+function cancatString(str) {
+  return str.join('');
 }
 
 /**
@@ -109,7 +138,7 @@ function cancatString() {
  */
 
 function splitString(str, divider) {
-  // Write your code here
+  return str.split(divider);
 }
 
 /**
@@ -119,7 +148,7 @@ function splitString(str, divider) {
  * @returns {boolean}
  */
 function hasSubString(str, subStr) {
-  // Write your code here
+  return str.includes(subStr);
 }
 
 /**
@@ -128,7 +157,7 @@ function hasSubString(str, subStr) {
  * @returns {boolean}
  */
 function isLowerCase(char) {
-  // Write your code here
+  return char === char.toLowerCase() && char !== char.toUpperCase();
 }
 
 module.exports = {
